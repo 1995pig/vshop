@@ -1,0 +1,8 @@
+cn.mldn.test
+cn.mldn.util
+cn.mldn.util.dao
+cn.mldn.util.dao.abs
+cn.mldn.util.dbc
+cn.mldn.util.enctype
+cn.mldn.util.factory
+cn.mldn.util.proxy
