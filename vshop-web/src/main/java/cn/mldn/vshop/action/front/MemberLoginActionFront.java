@@ -17,7 +17,7 @@ public class MemberLoginActionFront extends AbstractBaseAction {
 		ModelAndView mav = new ModelAndView(super.getUrl("forward.front.page"));
 		IMemberServiceFront memberService = Factory.getServiceInstance("member.service.front");
 		try {
-			member.setPassword(PasswordUtil.getPassword(member.getPassword()));
+			member.setPassword(PasswordUtil.getPassword(member.getPassword()));//进行密码加密操作	
 			if(memberService.addMember(member)) {	// 注册成功
 				super.setUrlAndMsg("login.page", "regist.success");
 			} else {
@@ -59,19 +59,19 @@ public class MemberLoginActionFront extends AbstractBaseAction {
 				ServletObjectUtil.getSession().setAttribute("lastdate", map.get("lastdate"));
 				ServletObjectUtil.getSession().setAttribute("allRoles", map.get("allRoles"));
 				ServletObjectUtil.getSession().setAttribute("allActions", map.get("allActions"));
-				String rememberme = ServletObjectUtil.getRequest().getParameter("rememberme");
+				String rememberme = ServletObjectUtil.getRequest().getParameter("rememberme");	//记住密码选项
 				if (rememberme != null || "true".equals(rememberme)) { // 选中了复选框
 					// 当用户登录成功之后需要进行Cookie信息的保存处理
 					RememberMeUtil rmu = new RememberMeUtil(ServletObjectUtil.getRequest(),
 							ServletObjectUtil.getResponse());
-					rmu.saveRemeber(member.getMid(), PasswordUtil.getPassword(member.getPassword())); // 进行加密处理操作
+					rmu.saveRemeber(member.getMid(), PasswordUtil.getPassword(member.getPassword())); // 进行加密处理操作,保存在cookie中
 				}
 				super.setUrlAndMsg("index.page", "login.success");
 				// msg = "登录成功，欢迎光临！" ;
 			} else if (result == 2) {
 				// msg = "该用户已经被锁定，请与管理员联系！" ;
 				super.setUrlAndMsg("login.page", "login.locked");
-			} else {
+			} else {	//result == 0
 				super.setUrlAndMsg("login.page", "login.failure");
 				// msg = "用户登录失败，错误的用户名或者是密码！" ;
 			}

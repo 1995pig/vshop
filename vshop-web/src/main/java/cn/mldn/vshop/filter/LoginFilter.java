@@ -13,13 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import cn.mldn.util.action.ActionMessageUtil;
 @WebFilter("/pages/front/center/*") 
-public class LoginFilter implements Filter {
-
-	@Override
-	public void destroy() {
-
-	}
-
+public class LoginFilter implements Filter { 
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
 			throws IOException, ServletException {
@@ -43,4 +37,8 @@ public class LoginFilter implements Filter {
 
 	}
 
+	@Override
+	public void destroy() {
+
+	}
 }

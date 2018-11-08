@@ -90,4 +90,39 @@ public interface IMemberServiceFront {
 	 * @throws Exception SQL异常
 	 */
 	public Map<String,Object> login(String mid,String password) throws Exception ;
+	
+	
+	//==================================================================================
+	/**
+	 * 进行数据更新前的信息查找，调用IMemberDAO.findById()方法
+	 * @param mid 要更新的用户编号
+	 * @return 用户信息以VO形式返回
+	 * @throws Exception 
+	 */
+	public Member getEditBasePre(String mid) throws Exception;
+	/**
+	 * 进行用户基本数据的更新，调用IMemberDAO.doUpdateBase()方法
+	 * @param vo 包含有更新数据
+	 * @return 返回更新数据的结果，成功返回true，失败返回false
+	 * @throws Exception
+	 */
+	public boolean editBase(Member vo) throws Exception;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

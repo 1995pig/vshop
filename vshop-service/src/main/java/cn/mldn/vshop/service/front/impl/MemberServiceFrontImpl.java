@@ -32,8 +32,8 @@ public class MemberServiceFrontImpl extends AbstractService implements IMemberSe
 			IMemberDAO memberDAO = Factory.getDAOInstance("member.dao") ;
 			if (memberDAO.doUpdate(vo)) { // 保存用户数据
 				IRoleDAO roleDAO = Factory.getDAOInstance("role.dao");
-				if (roleDAO.doRemoveMemberRole(vo.getMid())) {
-					return roleDAO.doCreateMemberRole(vo.getMid(), rids);
+				if (roleDAO.doRemoveMemberRole(vo.getMid())) {	///删除原用户在  member_role中所有数据
+					return roleDAO.doCreateMemberRole(vo.getMid(), rids);	///在member_role中创建新的数据
 				}
 			}
 		}
@@ -45,11 +45,11 @@ public class MemberServiceFrontImpl extends AbstractService implements IMemberSe
 		Map<String,Object> map = new HashMap<String,Object>() ;
 		if (super.exists(mid, "member:edit")) {	// 具备有指定的权限才可以实现追加
 			IRoleDAO roleDAO = Factory.getDAOInstance("role.dao") ;
-			map.put("allRoles", roleDAO.findAll()) ;
-			map.put("memberRoles", roleDAO.findAllByMember(editMid)) ;
+			map.put("allRoles", roleDAO.findAll()) ;	//查询所有的角色信息 List<Role>
+			map.put("memberRoles", roleDAO.findAllByMember(editMid)) ;	//查询指定用户所有的角色标记信息 flag[]
 			IMemberDAO memberDAO = Factory.getDAOInstance("member.dao") ;
 			map.put("member", memberDAO.findById(editMid)) ; 
-		}
+		}	
 		return map;
 	}
 	
@@ -75,7 +75,7 @@ public class MemberServiceFrontImpl extends AbstractService implements IMemberSe
 		Map<String,Object> map = new HashMap<String,Object>() ;
 		if (super.exists(mid, "member:add")) {	// 具备有指定的权限才可以实现追加
 			IRoleDAO roleDAO = Factory.getDAOInstance("role.dao") ;
-			map.put("allRoles", roleDAO.findAll()) ;
+			map.put("allRoles", roleDAO.findAll()) ;	//所有的角色
 		}
 		return map;
 	}
@@ -89,14 +89,14 @@ public class MemberServiceFrontImpl extends AbstractService implements IMemberSe
 		rids.add(8) ;
 		IMemberDAO memberDAO = Factory.getDAOInstance("member.dao") ;
 		Member result =  memberDAO.findById(vo.getMid()) ;
-		if (result == null) {
+		if (result == null) {	//用户不存在则进行增加用户。
 			vo.setRegdate(new Date());	// 注册日期为当前日期
 			vo.setName("新用户 - " + (long)Math.random());
 			vo.setLocked(0); 	// 默认用户不应该被锁定
 			vo.setLastdate(new Date());	// 最后一次登录日期为注册日期
 			if (memberDAO.doCreate(vo)) {	// 保存用户数据
 				IRoleDAO roleDAO = Factory.getDAOInstance("role.dao") ;
-				return roleDAO.doCreateMemberRole(vo.getMid(), rids) ; 
+				return roleDAO.doCreateMemberRole(vo.getMid(), rids) ;	//用户添加成功后，向member_role中添加信息 
 			}
 		}
 		return false ;
@@ -120,12 +120,12 @@ public class MemberServiceFrontImpl extends AbstractService implements IMemberSe
 					MemberLogs mlvo = new MemberLogs() ;	// 实例化MemberLogs对象
 					mlvo.setMid(mid);	// 设置用户id
 					mlvo.setLogindate(new Date()); 	// 设置登录日期
-					memberLogsDAO.doCreate(mlvo) ;
+					memberLogsDAO.doCreate(mlvo) ;	//更新登录日志
 				}
-				// 要保存用户的所有角色信息
+				// 要保存用户的所有角色标记信息
 				IRoleDAO roleDAO = Factory.getDAOInstance("role.dao") ;
 				map.put("allRoles", roleDAO.findAllByMember(mid)) ;
-				// 要保存用户对应的所有权限信息
+				// 要保存用户对应的所有权限标记信息
 				IActionDAO actionDAO = Factory.getDAOInstance("action.dao") ;
 				map.put("allActions", actionDAO.findAllByMember(mid)) ; 
 			} else {	// 用户已经锁定了
@@ -133,6 +133,19 @@ public class MemberServiceFrontImpl extends AbstractService implements IMemberSe
 			}
 		} 
 		return map; 
+	}
+	
+	//===============================================================
+	 
+	public Member getEditBasePre(String mid) throws Exception {
+		 IMemberDAO memberDAO = Factory.getDAOInstance("member.dao");
+		 return memberDAO.findById(mid);
+	}
+
+	 
+	public boolean editBase(Member vo) throws Exception {
+		IMemberDAO memberDAO = Factory.getDAOInstance("member.dao");
+		return memberDAO.doUpdateBase(vo);
 	}
 
 }

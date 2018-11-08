@@ -20,9 +20,10 @@ public abstract class AbstractBaseAction {
 	 * @param urlKey url参数的key
 	 * @param msgKey msg参数的key
 	 */
-	public void setUrlAndMsg(String urlKey,String msgKey) {
+	public void setUrlAndMsg(String urlKey,String msgKey,Object...param) {
 		ServletObjectUtil.getRequest().setAttribute("url", this.getUrl(urlKey));
-		ServletObjectUtil.getRequest().setAttribute("msg", this.getMsg(msgKey));
+		ServletObjectUtil.getRequest().setAttribute("msg", this.getMsg(msgKey,param));
+		
 	}
 
 	/**
@@ -48,4 +49,26 @@ public abstract class AbstractBaseAction {
 			e.printStackTrace();
 		}
 	}
+	
+	//===================================================
+	/**
+	 * 根据当前登录的session取得该用户的编号信息
+	 * @return 用户编号，如果没有登陆过返回null
+	 */
+	public String getMid(){
+		return (String)ServletObjectUtil.getSession().getAttribute("mid");
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+

@@ -34,9 +34,9 @@ public class AdminLoginFilter implements Filter {
 			req.getRequestDispatcher(ActionMessageUtil.getUrl("forward.front.page")).forward(request, resp); 
 		} else {
 			Set<String> allActions = (Set<String>) request.getSession().getAttribute("allActions") ;
-			if (allActions.contains("admin:show")) {
-				chain.doFilter(req, resp);
-			} else {
+			if (allActions.contains("admin:show")) {	//进入到具有1234角色的index.jsp
+				chain.doFilter(req, resp);		
+			} else {									//进入到具有5678角色的index.jsp
 				request.setAttribute("msg", ActionMessageUtil.getMsg("unaction.msg"));
 				request.setAttribute("url", ActionMessageUtil.getUrl("index.page"));
 				req.getRequestDispatcher(ActionMessageUtil.getUrl("forward.front.page")).forward(request, resp); ;

@@ -13,18 +13,11 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cn.mldn.util.factory.Factory;
-import cn.mldn.util.web.ServletObjectUtil;
+import cn.mldn.util.factory.Factory; 
 import cn.mldn.vshop.service.front.IMemberServiceFront;
 import cn.mldn.vshop.util.cookie.RememberMeUtil;
 @WebFilter("/*") 
-public class CookieFilter implements Filter {
-
-	@Override
-	public void destroy() {
-
-	}
-
+public class CookieFilter implements Filter { 
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
 			throws IOException, ServletException {
@@ -59,6 +52,10 @@ public class CookieFilter implements Filter {
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
 		// TODO Auto-generated method stub
+
+	}
+	@Override
+	public void destroy() {
 
 	}
 
