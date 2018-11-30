@@ -1,11 +1,43 @@
 package cn.mldn.vshop.util.action;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.Set;
 
 import cn.mldn.util.action.ActionMessageUtil;
 import cn.mldn.util.web.ServletObjectUtil;
+import cn.mldn.vshop.vo.Action;
+import cn.mldn.vshop.vo.Role;
 
 public abstract class AbstractBaseAction {
+	/**
+	 * 进行是否具备有指定角色的检测，所有的角色保存在session范围中的allRoles.
+	 * @param role 角色标记
+	 * @return 具备指定角色返回true
+	 */
+	public boolean isRole(String role){
+ 		Set<Role> allRoles = (Set<Role>)ServletObjectUtil.getSession().getAttribute("allRoles");
+  		return allRoles.contains(role);
+	}
+	/**
+	 * 进行是否具备有指定权限的检测，所有的权限保存在session范围中的allActions
+	 * @param action 权限标记
+	 * @return 具备有指定权限返回false
+	 */
+	public boolean isAction(String action){
+   		Set<Action> allActions = (Set<Action>) ServletObjectUtil.getSession().getAttribute("allActions");
+ 		return allActions.contains(action);
+	}
+	/**
+	 * 进行角色和权限的双重认证，调用isRole()和isAction()方法
+	 * @param role 角色标记
+	 * @param action 权限标记
+	 * @return 具备有指定的角色和权限返回true
+	 */
+	public boolean isRoleAndAction(String role,String action){ 
+		return this.isRole(role) && this.isAction(action);
+	}
+	
 	/**
 	 * 取得路径信息，通过ActionMessageUtil.getUrl()方法获得
 	 * 
@@ -41,8 +73,11 @@ public abstract class AbstractBaseAction {
 	 * 进行信息打印输出操作，主要为ajax异步处理操作提供支持
 	 * 
 	 * @param value 要打印的对象内容
+	 * @throws UnsupportedEncodingException 
 	 */
-	public void print(Object value) {
+	public void print(Object value) throws UnsupportedEncodingException {
+ 		ServletObjectUtil.getRequest().setCharacterEncoding("UTF-8");
+ 		ServletObjectUtil.getResponse().setCharacterEncoding("UTF-8");
 		try {
 			ServletObjectUtil.getResponse().getWriter().print(value);
 		} catch (IOException e) {

@@ -47,7 +47,7 @@ public class MemberLoginActionFront extends AbstractBaseAction {
 	}
 
 	public ModelAndView login(Member member) {
-		ModelAndView mav = new ModelAndView(super.getUrl("forward.front.page"));
+ 		ModelAndView mav = new ModelAndView(super.getUrl("forward.front.page"));
 		IMemberServiceFront memberService = Factory.getServiceInstance("member.service.front");
 		try {
 			Map<String, Object> map = memberService.login(member.getMid(),

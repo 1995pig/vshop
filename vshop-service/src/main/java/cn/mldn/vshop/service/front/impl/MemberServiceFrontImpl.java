@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import cn.mldn.util.enctype.PasswordUtil;
 import cn.mldn.util.factory.Factory;
 import cn.mldn.vshop.dao.IActionDAO;
 import cn.mldn.vshop.dao.IMemberDAO;
@@ -142,10 +143,20 @@ public class MemberServiceFrontImpl extends AbstractService implements IMemberSe
 		 return memberDAO.findById(mid);
 	}
 
-	 
+	@Override
 	public boolean editBase(Member vo) throws Exception {
 		IMemberDAO memberDAO = Factory.getDAOInstance("member.dao");
 		return memberDAO.doUpdateBase(vo);
+	} 
+	@Override
+	public boolean editPassword(String mid, String oldpassword, String newpassword) throws Exception {
+		IMemberDAO member = Factory.getDAOInstance("member.dao");
+   		if(member.findLogin(mid,oldpassword)!=null){	//验证原始密码是否正确，正确才可以修改
+ 			return member.doUpdatePassword(mid,newpassword);
+		}else{
+ 			return false ;
+		} 
+		
 	}
 
 }

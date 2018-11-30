@@ -10,6 +10,7 @@
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<json.version>2.4</json.version>
 		<jdk.version>1.8</jdk.version>
 		<junit.version>4.12</junit.version>
 		<jsp.version>2.2</jsp.version>
@@ -27,6 +28,12 @@
 	</properties>
 	<dependencyManagement>
 		<dependencies>
+			<dependency> 
+				<groupId>net.sf.json-lib</groupId> 
+				<artifactId>json-lib</artifactId> 
+				<version>${json.version}</version> 
+				<classifier>jdk15</classifier> 
+			</dependency>
 			<dependency>
 				<groupId>cn.mldn</groupId>
 				<artifactId>vshop-mvc</artifactId>
