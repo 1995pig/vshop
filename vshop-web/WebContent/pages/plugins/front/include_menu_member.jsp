@@ -3,11 +3,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%!
-	public static final String GOODS_SEARCH_URL = "pages/front/goods/goods_list.jsp" ;
+	public static final String GOODS_SEARCH_URL = "pages/front/admin/goods/GoodsActionFront!research.action" ;
  	public static final String MEMBER_BASE_EDIT_URL = "pages/front/center/member/MemberCenterActionFront!editBasePre.action	";
    	public static final String MEMBER_ADDRESS  = "pages/front/center/address/MemberAddressActionFront!list.action";
  	public static final String LOGOUT_URL="MemberLoginActionFront!logout.action";
-
+ 	public static final String SHOPCAR_LIST_URL = "pages/front/center/shopcar/ShopcarActionFront!list.action";
 %>
 <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
 	<div class="navbar-header">
@@ -32,14 +32,14 @@
 					</ul></li>
 			</c:if>
 			<c:if test="${fn:contains(allRoles,'shopcar')}">
-			<li><a href="pages/front/center/shopcar/shopcar_list.jsp">
+			<li><a href="<%=SHOPCAR_LIST_URL%>">
 				<span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;我的购物车</a></li>
 			</c:if>
 		</c:if>
 	</ul> 
 	<form class="navbar-form navbar-left" action="<%=GOODS_SEARCH_URL%>" method="post">
 		<div class="form-group"> 
-			<input type="text" class="form-control input-xs" placeholder="请输入商品关键字..." style="width:600px;background: #F5F5F5;height:30px;">
+			<input type="text" id="kw" name="kw" class="form-control input-xs" placeholder="${keyWord }" style="width:600px;background: #F5F5F5;height:30px;">
 			<button class="btn btn-danger" style="height:30px;">搜索</button>
 		</div>
 	</form>

@@ -12,7 +12,7 @@
 		</div>
 		<div class="col-md-5 col-xs-5">
 			<span class="h3"> 
-				<strong>&nbsp;魔乐科技软件学院MLDN（www.mldn.cn）</strong>
+				<strong>&nbsp;一二三四五、上山打老虎。</strong>
 			</span>
 		</div>
 	</div>

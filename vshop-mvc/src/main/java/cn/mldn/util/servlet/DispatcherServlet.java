@@ -25,8 +25,7 @@ public class DispatcherServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException { // 所有的请求交给服务方法创建请求处理线程
-
-		String requestContextType = request.getContentType(); // 取得当前的表单模式
+ 		String requestContextType = request.getContentType(); // 取得当前的表单模式
 		if (requestContextType != null) {
 			if (requestContextType.contains("multipart/form-data")) { // 表示表单封装
 				try {
@@ -44,15 +43,15 @@ public class DispatcherServlet extends HttpServlet {
 		String urlFlag = "/error" ;
 		ParameterValidatorUtil pvu = new ParameterValidatorUtil(actionName);
 		if (pvu.validate()) {
-			String urlResult[] = RequestUrlUtil.splitUrl(request);
+ 			String urlResult[] = RequestUrlUtil.splitUrl(request);
 			try {
-				// DispatcherServlet程序类只是负责有数据跳转操作。
+  				// DispatcherServlet程序类只是负责有数据跳转操作。
 				urlFlag = ActionBeanUtil.actionHandle(urlResult);
  			} catch (Exception e) {
-				e.printStackTrace();
+  				e.printStackTrace();
 			}
 		} else { // 应该跳转到一个错误页上
-			if (ActionMessageUtil.getUrl(actionName + ".error.page") != null) {
+  			if (ActionMessageUtil.getUrl(actionName + ".error.page") != null) {
 				urlFlag = ActionMessageUtil.getUrl(actionName + ".error.page") ;
 			} 
 		}
@@ -65,7 +64,7 @@ public class DispatcherServlet extends HttpServlet {
 		}
 		ServletObjectUtil.clear(); // 清空保存的request、response
 		if (urlFlag != null) {
-			request.getRequestDispatcher(urlFlag).forward(request,
+ 			request.getRequestDispatcher(urlFlag).forward(request,
 				response);
 		}
 	}

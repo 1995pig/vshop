@@ -143,11 +143,11 @@ public class ParameterValueUtil {
 	public static Object getBasicParameterValue(String paramName,
 			String paramType) throws Exception {
 		String val = getParameter(paramName);
-		if ("int".equals(paramType) || "java.lang.Integer".equals(paramType)) {
+ 		if ("int".equals(paramType) || "java.lang.Integer".equals(paramType)) {
 			if (val == null || "".equals(val)) {
 				return 0; // 表示没有传递该参数
 			} else {
-				return Integer.parseInt(val);
+ 					return Integer.parseInt(val); 
 			}
 		} else if ("double".equals(paramType)
 				|| "java.lang.Double".equals(paramType)) {

@@ -2,7 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<%!
+	public static final String SUBITEM_LIST_PAGE = "pages/back/admin/item/SubItemActionBack!listByItemId.action";
+%>
 <jsp:include page="/pages/plugins/back/back_header.jsp"/>
 <script type="text/javascript" src="js/back/admin/item/item_list.js"></script>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -25,26 +27,24 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td class="text-center">
-									<input type="text" id="title-1" name="title-1" class="form-control input-sm" value="图书音响">
-								</td>
-								<td class="text-center">
-									<button class="btn btn-primary" id="updateBtn-1"><span class="glyphicon glyphicon-edit"></span>&nbsp;修改</button>
-									<a class="btn btn-warning" href="pages/back/admin/item/subitem_list.jsp"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;管理子栏目</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="text-center">
-									<input type="text" id="title-2" name="title-2" class="form-control input-sm" value="居家生活">
-								</td>
-								<td class="text-center">
-									<button class="btn btn-primary" id="updateBtn-2"><span class="glyphicon glyphicon-edit"></span>&nbsp;修改</button>
-									<a class="btn btn-warning" href="pages/back/admin/item/subitem_list.jsp"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;管理子栏目</a>
-								</td>
-							</tr>
+							 
+							<c:if test="${allItems !=null }">
+								<c:forEach items="${allItems}" var= "item">
+ 									<tr>
+										<td class="text-center">
+											<input type="text" id="title-${item.iid }" name="title-${item.iid }" class="form-control input-sm" value="${item.title }">
+										</td>
+										<td class="text-center">
+											<button class="btn btn-primary" id="updateBtn-${item.iid }"><span class="glyphicon glyphicon-edit"></span>&nbsp;修改</button>
+			 							<a class="btn btn-warning" href="<%=SUBITEM_LIST_PAGE%>?iid=${item.iid }"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;管理子栏目</a>
+										
+										</td>
+									</tr>
+								</c:forEach>
+							</c:if>
 						</tbody>
 					</table>
+					<button id="createData" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-file"></span>&nbsp;生成前台商品分类数据</button>
 				</div>
 				<div class="panel-footer">
 					<jsp:include page="/pages/plugins/include_alert.jsp"/>

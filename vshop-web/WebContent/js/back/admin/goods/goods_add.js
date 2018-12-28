@@ -1,4 +1,14 @@
 $(function() {
+	$(iid).on("change",function(){
+ 		if(this.value != null){ 
+			$("#sid option:gt(0)").remove();
+			$.post("pages/back/admin/item/SubItemActionBack!listAjax.action",{iid:this.value},function(data){
+				for(x=0;x<data.allSubItems.length;x++){
+					$("#sid").append("<option value='" + data.allSubItems[x].sid +"'>" +data.allSubItems[x].title  +"</option>");
+				}
+			},"json");
+		}
+	});
 	$("#myform").validate({
 		debug : true, // 取消表单的提交操作
 		submitHandler : function(form) {
@@ -24,7 +34,7 @@ $(function() {
 		},
 		errorClass : "text-danger",
 		rules : {
-			"goods.title" : {
+			"title" : {
 				required : true,
 				//remote : {
 //									url : "check.jsp", // 后台处理程序
@@ -43,20 +53,20 @@ $(function() {
 //									}
 				//}
 			},
-			"goods.iid" : {
+			"iid" : {
 				required : true
 			} ,
-			"goods.sid" : {
+			"sid" : {
 				required : true
 			},
-			"goods.price" : {
+			"price" : {
 				required : true ,
 				number : true
 			},
-			"goods.photo" : {
+			"photo" : {
 				required : true
 			},
-			"goods.note" : {
+			"note" : {
 				required : true
 			}
 		}

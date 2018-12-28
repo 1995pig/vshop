@@ -2,7 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<%!
+	public static final String GOODS_EDIT_PRE_URL = "pages/back/admin/goods/GoodsActionBack!editPre.action";
+%>
 <jsp:include page="/pages/plugins/back/back_header.jsp"/>
 <script type="text/javascript" src="js/back/admin/goods/goods_list.js"></script>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -33,25 +35,30 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
+							<c:forEach items="${allGoods}" var="goods">
+							<tr id="goods-${goods.gid }">
 								<td class="text-center">
-									<input type="checkbox" id="goods.gid" name="goods.gid" value="1">
+									<input type="checkbox" id="gid" name="gid" value="${goods.gid }">
 								</td>
 								<td class="text-center">
-									<a id="showBtn-1" onmouseover="this.style.cursor='hand'">Java开发实战经典</a>
-								</td>
-								<td class="text-center">mldn</td>
-								<td class="text-center">79.8</td>
-								<td class="text-center">2017-10-10</td>
+									<a id="showBtn-${goods.gid}" onmouseover="this.style.cursor='hand'">${goods.title }</a>
+								</td>	
+								<td class="text-center">${goods.mid }</td>
 								<td class="text-center">
-									<a type="button" class="btn btn-info btn-xs" href="pages/back/admin/goods/goods_edit.jsp">
+								<fmt:formatNumber value="${goods.price}"/>	 
+								</td>
+								<td class="text-center">${goods.pubdate}</td>
+								<td class="text-center">
+									<a type="button" class="btn btn-info btn-xs" href="<%=GOODS_EDIT_PRE_URL%>?gid=${goods.gid}">
 										<span class="glyphicon glyphicon-edit"></span>&nbsp;编辑</a>
 								</td>
 							</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 					<div>
 						<button class="btn btn-danger" id="rmBtn">删除商品</button>
+						<button id="createData" class="btn btn-info" ><span class="glyphicon glyphicon-file"></span>&nbsp;生成前台商品数据</button>
 					</div>
 					<div id="splitBarDiv" style="float:right">
 						<jsp:include page="/pages/plugins/split_plugin_page_bar.jsp"/> 
@@ -69,4 +76,5 @@
 		<div class="control-sidebar-bg"></div>
 	</div>
 	<jsp:include page="/pages/plugins/back/include_javascript_foot.jsp" />
-<jsp:include page="/pages/plugins/back/back_footer.jsp"/>
+	<jsp:include page="/pages/plugins/back/info/include_goods_modal.jsp" />
+ <jsp:include page="/pages/plugins/back/back_footer.jsp"/>

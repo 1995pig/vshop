@@ -2,7 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<%!
+ 	public static final String ITEM_LIST  ="pages/back/admin/item/ItemActionBack!list.action" ;
+	public static final String GOODS_LIST_URL="pages/back/admin/goods/GoodsActionBack!list.action";
+ 	public static final String GOODS_ADD = "pages/back/admin/goods/GoodsActionBack!getAddPre.action";
+%>
 <aside class="main-sidebar">
 	<!-- sidebar: style can be found in sidebar.less -->
 	<section class="sidebar">
@@ -38,15 +42,15 @@
 				</a>
 				<ul class="treeview-menu">
 					<c:if test="${fn:contains(allActions,'goods:item') }">
-						<li><a href="pages/back/admin/item/item_list.jsp"><i
+						<li><a href="<%=ITEM_LIST%>"><i
 							class="fa fa-circle-o"></i> 商品分类</a></li>
 					</c:if>
 					<c:if test="${fn:contains(allActions,'goods:list') }">
-						<li><a href="pages/back/admin/goods/goods_list.jsp"><i
+						<li><a href="<%=GOODS_LIST_URL%>"><i
 							class="fa fa-circle-o"></i> 商品列表</a></li>
 					</c:if>
 					<c:if test="${fn:contains(allActions,'goods:add') }">
-						<li><a href="pages/back/admin/goods/goods_add.jsp"><i
+						<li><a href="<%=GOODS_ADD%>"><i
 							class="fa fa-circle-o"></i> 商品上架</a></li>
 					</c:if>
 				</ul></li>

@@ -25,22 +25,20 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td class="text-center">
-									<input type="text" id="title-1" name="title-1" class="form-control input-sm" value="幼儿图书">
-								</td>
-								<td class="text-center">
-									<button class="btn btn-primary" id="updateBtn-1-1"><span class="glyphicon glyphicon-edit"></span>&nbsp;修改</button>
-								</td>
-							</tr>
-							<tr>
-								<td class="text-center">
-									<input type="text" id="title-2" name="title-2" class="form-control input-sm" value="计算机图书">
-								</td>
-								<td class="text-center">
-									<button class="btn btn-primary" id="updateBtn-1-2"><span class="glyphicon glyphicon-edit"></span>&nbsp;修改</button>
-								</td>
-							</tr>
+ 							<c:if test="${allSubItems != null}">
+								<c:forEach items="${allSubItems }" var="subItem">
+									<tr>
+										<td class="text-center">
+											<input type="text" id="title-${subItem.sid }" name="title-${subItem.sid }" class="form-control input-sm" value="${subItem.title }">
+										</td>
+										<td class="text-center">
+											<button class="btn btn-primary" id="updateBtn-${subItem.iid}-${subItem.sid}"><span class="glyphicon glyphicon-edit"></span>&nbsp;修改</button>
+										</td>
+									</tr>
+								</c:forEach>
+							</c:if>
+							
+							 
 						</tbody>
 					</table>
 				</div>
