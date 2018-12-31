@@ -121,6 +121,65 @@ public class ShopcarDAOImpl extends AbstractDAO implements IShopcarDAO {
 		return map;
 	}
 
-	
+	@Override
+	public boolean doRemoveByMemberAndGid(String mid, Long gid) throws SQLException {
+		String sql = " DELETE FROM shopcar WHERE mid = ? AND gid = ? ";
+		super.pstmt = super.conn.prepareStatement(sql);
+		super.pstmt.setString(1, mid);
+		super.pstmt.setLong(2, gid);
+		return super.pstmt.executeUpdate() > 0;
+ 	}
+
+	@Override
+	public boolean doUpdateAmountBattch(String mid, Map<Long, Integer> sc) throws SQLException {
+		String sql = "UPDATE shopcar SET amount = ? WHERE mid = ? AND gid = ? ";
+		super.pstmt = super.conn.prepareStatement(sql);
+		Iterator<Map.Entry<Long, Integer>> iter = sc.entrySet().iterator();
+		while(iter.hasNext()){
+			Map.Entry<Long,Integer> me = iter.next();
+			super.pstmt.setInt(1, me.getValue());
+			super.pstmt.setString(2, mid);
+			super.pstmt.setLong(3, me.getKey());
+			super.pstmt.addBatch();   //加入批处理
+		}
+		int result[] = super.pstmt.executeBatch();	
+		for(int x=0;x<result.length;x++){
+			if(result[x] == 0){
+				return false;
+			}
+		}
+		return true;
+		
+	}
+
+	@Override
+	public boolean doRemoveByMemberAndGoods(String mid, Set<Long> gids) throws SQLException {
+ 		StringBuffer buf = new StringBuffer(" DELETE FROM shopcar WHERE mid = ? AND gid IN (");
+		Iterator<Long> iter = gids.iterator();
+		while(iter.hasNext()){
+			buf.append(iter.next()).append(",");
+		}
+		buf.delete(buf.length()-1, buf.length()).append(")");
+ 		super.pstmt = super.conn.prepareStatement(buf.toString());
+		super.pstmt.setString(1, mid);
+		return super.pstmt.executeUpdate() > 0;
+		
+// 		下面是批处理，同样可以实现该操作。		
+//		String sql = "DELETE FROM shopcar WHERE mid = ? AND gid = ? ";
+//		super.pstmt = super.conn.prepareStatement(sql);
+//		Iterator<Long> iter = gids.iterator();
+//		while(iter.hasNext()){
+//			super.pstmt.setString(1, mid);
+//			super.pstmt.setLong(2, iter.next());
+//			super.pstmt.addBatch();
+//		}
+//		int result[] =super.pstmt.executeBatch();
+//		for(int x=0;x<result.length;x++){
+//			if(result[x] < 0){
+//				return false;
+//			}
+//		}
+//		return true;
+	}
  
 }

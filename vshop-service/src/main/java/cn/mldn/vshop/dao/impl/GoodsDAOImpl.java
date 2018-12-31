@@ -240,6 +240,11 @@ public class GoodsDAOImpl extends AbstractDAO implements IGoodsDAO {
 		}
 		return all;
 	}
+
+	 
+	 
+
+	
 }
 
 

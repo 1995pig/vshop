@@ -39,8 +39,5 @@ public interface IGoodsDAO extends IBaseDAO<Integer,Goods> {
 	 * @throws SQLException
 	 */
 	public List<Goods> listByGids(Set<Long> gids) throws SQLException;
-	
-	
-	
- 
+	 
 }

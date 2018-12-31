@@ -3,6 +3,7 @@ package cn.mldn.vshop.service.front.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import cn.mldn.util.factory.Factory;
 import cn.mldn.vshop.dao.IGoodsDAO;
@@ -40,6 +41,38 @@ public class ShopcarServiceFrontImpl implements IShopcarServiceFront {
 		}
 		map.put("allShopcars", shopcar);
  		return map;
+	}
+
+	@Override
+	public boolean edit(String mid, Integer amount, Long gid) throws Exception {
+		IShopcarDAO dao = Factory.getDAOInstance("shopcar.dao");
+		if(amount == 0){	//购物车该商品数量为0，则将此商品进行删除<br>
+			return dao.doRemoveByMemberAndGid(mid, gid);
+		}else{
+			return dao.doUpdateIncreamentById(mid, gid, amount);
+		} 
+	}
+
+	@Override
+	public boolean editAmountBattch(String mid, Map<Long, Integer> sc) throws Exception {
+		if(sc.size() ==0){
+			System.out.println(sc.size() + "xxx");
+			return false;
+		}
+		IShopcarDAO dao = Factory.getDAOInstance("shopcar.dao");
+ 		return dao.doUpdateAmountBattch(mid, sc);
+	}
+
+	@Override
+	public boolean delete(String mid, Long gid) throws Exception {
+		IShopcarDAO dao = Factory.getDAOInstance("shopcar.dao");
+		return dao.doRemoveByMemberAndGid(mid, gid);
+	}
+
+	@Override
+	public boolean deleteByMemberAndGids(String mid, Set<Long> gids) throws Exception {
+		IShopcarDAO dao = Factory.getDAOInstance("shopcar.dao");
+		return dao.doRemoveByMemberAndGoods(mid, gids);
 	}
 
 }

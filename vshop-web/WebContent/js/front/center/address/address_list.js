@@ -1,8 +1,7 @@
 $(function() {
 	$("#delBtn").on("click",function(){
 		id   = $("#aid:checked").val();
- 		console.log(id + "===========");
- 		$.post("pages/front/center/address/MemberAddressActionFront!editFlag.action",{adid:id},function(data){
+  		$.post("pages/front/center/address/MemberAddressActionFront!editFlag.action",{adid:id},function(data){
   			operateAlert(data.trim() == "true","默认配送地址修改成功！","默认配送地址修改失败");
 		},"text")
 	});

@@ -45,17 +45,17 @@
 							 
 							 <c:if test="${allGoods!=null }" >
 							 	<c:forEach items="${allGoods }" var="good">
-									 <tr>
+									 <tr id="shopcar-${good.gid }" > 
 										<td class="text-center">
 											<input type="checkbox" id="gid" name="gid" value="${good.gid }">
 										</td>
 										<td class="text-center">
 											<a href="<%=GOODS_SHOW_URL %>?gid=${good.gid}" onmouseover="this.style.cursor='hand'">${good.title }</a>
 										</td>
-										<td class="text-center"><span id="price-${good.gid }"><fmt:formatNumber value="${good.price }"/></span></td>
+ 										<td class="text-center"><span id="price-${good.gid }">  ${good.price } </span></td>
 										<td class="text-center">
 											<button class="btn btn-primary" id="sub-${good.gid }">-</button>
-											<input type="text" id="amount-${good.gid }" name="amount-${good.gid }" class="shopcar-form-control" size="4" maxlength="4" value="${allShopcars[good.gid] }">
+											<input type="text" id="amount-${good.gid }" name="amount-${good.gid }" class="shopcar-form-control" disabled="disabled" size="4" maxlength="4" value="${allShopcars[good.gid] }">
 											<button class="btn btn-primary" id="add-${good.gid }">+</button> 
 										</td>
 										<td class="text-center"><button class="btn btn-primary" id="updateBtn-${good.gid }">修改</button></td>
@@ -66,7 +66,7 @@
 							</tbody>
 						</table>
 						<div class="text-right">
-							总价￥<span id="allPrice" class="text-danger h2">78.9</span>
+							总价￥<span id="allPrice" class="text-danger h2"></span>
 						</div>
 						<div>
 							<button class="btn btn-primary" id="editBtn"><span class="glyphicon glyphicon-pencil"></span>&nbsp;修改数量</button>

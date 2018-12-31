@@ -35,6 +35,29 @@ public interface IShopcarDAO extends IBaseDAO<String,Shopcar> {
 	 * @throws SQLException
 	 */
 	public Map<Long,Integer> findAllByMember(String mid) throws SQLException;
-	
+	/**
+	 * 删除购物车中的商品<br>
+	 * @param mid 用户id<br>
+	 * @param gid 商品id<br>
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean doRemoveByMemberAndGid(String mid,Long gid) throws SQLException;
+	/**
+	 * 修改购物车多个商品数量，进行批量修改<br>
+	 * @param mid 用户id<br>
+	 * @param sc key=商品id,value=商品数量<br>
+	 * @return 修改成功返回true，否则返回false<br>
+	 * @throws SQLException
+	 */
+	public  boolean doUpdateAmountBattch(String mid, Map<Long, Integer> sc) throws SQLException;
+	/**
+	 * 批量删除购物车中的商品<br>
+	 * @param mid 用户id<br>
+	 * @param gids 商品id的Set集合<br>
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean doRemoveByMemberAndGoods(String mid,Set<Long> gids) throws SQLException;
 	
 }
