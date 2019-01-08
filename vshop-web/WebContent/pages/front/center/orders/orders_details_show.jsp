@@ -4,6 +4,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:include page="/pages/plugins/front/front_header.jsp"/>
 </head>
+<%!
+	public static final String GOODS_SHOW_URL = "pages/front/admin/goods/GoodsActionFront!show.action";
+%>
 <body>
 	<div class="container"> 
 		<div id="headDiv" class="row">
@@ -26,23 +29,23 @@
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-md-3"><strong>订单编号：</strong></div>
-							<div class="col-md-9 col-md-pull-1">1001</div>
+							<div class="col-md-9 col-md-pull-1">${orders.oid }</div>
 						</div>
 						<div class="row">
 							<div class="col-md-3"><strong>下单用户：</strong></div>
-							<div class="col-md-9 col-md-pull-1">MLDN</div>
+							<div class="col-md-9 col-md-pull-1">${orders.mid }</div>
 						</div>
 						<div class="row">
 							<div class="col-md-3"><strong>下单日期：</strong></div>
-							<div class="col-md-9 col-md-pull-1">2017-10-10</div>
+							<div class="col-md-9 col-md-pull-1">${orders.subdate }</div>
 						</div>
 						<div class="row">
 							<div class="col-md-3"><strong>总金额：</strong></div>
-							<div class="col-md-9 col-md-pull-1">520</div>
+							<div class="col-md-9 col-md-pull-1">${orders.price }</div>
 						</div>
 						<div class="row">
 							<div class="col-md-3"><strong>购买商品总数：</strong></div>
-							<div class="col-md-9 col-md-pull-1">6</div>
+							<div class="col-md-9 col-md-pull-1"> ${fn:length(allGoods) }</div>
 						</div>
 						<div class="row">
 							<table class="table table-condensed">
@@ -55,30 +58,18 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td class="text-center">
-										<a href="pages/front/goods/goods_show.jsp" onmouseover="this.style.cursor='hand'">Java开发实战经典</a>
-									</td>
-									<td class="text-center">79.8</td>
-									<td class="text-center">10</td>
-									<td class="text-center">798</td>
-								</tr>
-								<tr>
-									<td class="text-center">
-										<a href="pages/front/goods/goods_show.jsp" onmouseover="this.style.cursor='hand'">Java开发实战经典</a>
-									</td>
-									<td class="text-center">79.8</td>
-									<td class="text-center">10</td>
-									<td class="text-center">798</td>
-								</tr>
-								<tr>
-									<td class="text-center">
-										<a href="pages/front/goods/goods_show.jsp" onmouseover="this.style.cursor='hand'">Java开发实战经典</a>
-									</td>
-									<td class="text-center">79.8</td>
-									<td class="text-center">10</td>
-									<td class="text-center">798</td>
-								</tr>
+								<c:if test="${allGoods!=null }">
+									<c:forEach items="${allGoods }" var="good">
+										<tr>
+											<td class="text-center">
+												<a href="<%=GOODS_SHOW_URL %>?gid=${good.gid}"  onmouseover="this.style.cursor='hand'">${good.title }</a>
+											</td>
+											<td class="text-center">${good.price }</td>
+											<td class="text-center">${allDetails[good.gid] }</td>
+											<td class="text-center">${allDetails[good.gid] * good.price}</td>
+										</tr>
+									</c:forEach>
+								</c:if>
 							</tbody>
 						</table>
 						</div>

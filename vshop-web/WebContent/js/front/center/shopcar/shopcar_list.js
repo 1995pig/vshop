@@ -107,16 +107,25 @@ $(function() {
 	});
 	
 	
-	
+	$("#addBtn").on("click",function(){
+ 		var gids = "";
+		$("#gid:checked").each(function(){
+			gids +=$(this).val()+",";
+ 		}); 
+		if(gids == ""){
+ 			operateAlert(false,"","请选择要购买的商品！！！");
+		}else{	
+ 			//直接跳转到某个页面，如果是action，gids则是整型数组
+			window.location ="pages/front/center/orders/OrderActionFront!getAddPre.action?gids="+gids;
+		} 
+	});
 	
 	
 	
 	$("#selectAll").on("click",function(){
 		checkboxSelectAll('gid',this.checked) ;
 	}) ;
-//	$("#rmBtn").on("click",function(){	// 绑定用户锁定操作
-//		operateChecked("确定要删除这些商品吗？","gid",'pages/back/admin/goods/GoodsActionBack!rm.action?p=p') ;
-//	}) ;
+ 
 	
 	
 	

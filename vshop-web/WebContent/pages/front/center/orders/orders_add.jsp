@@ -5,7 +5,7 @@
 <jsp:include page="/pages/plugins/front/front_header.jsp"/>
 <script type="text/javascript" src="js/front/center/orders/orders_add.js"></script>
 <%!
-	public static final String ORDERS_ADD_URL = "" ;
+	public static final String ORDERS_ADD_URL = "pages/front/center/orders/OrderActionFront!add.action" ;
 %>
 <body class="back">
 	<div class="container contentback">
@@ -30,24 +30,41 @@
 						<form class="form-horizontal" action="<%=ORDERS_ADD_URL%>" id="myform" method="post">
 							<div class="form-group" id="aidDiv">
 								<!-- 定义表单提示文字 -->
-								<label class="col-md-3 control-label" for="aid">收件地址：</label>
-								<div class="col-md-5">
-									<div class="radio">
-										<input type="radio" id="aid" name="aid" class="radio" checked value="1">李先生，13934720223，北京市朝阳区来广营马泉营
+								<label class="col-md-3 control-label" for="adid">收件地址：</label>
+									<div class="col-md-5">
+										<c:if test="${allAddress != null }" >
+											<c:forEach items="${allAddress }" var="address">
+												<div class="radio">
+													<input type="radio" id="adid" name="adid" class="radio" ${address.deflag==1 ?"checked":""} value="${address.adid}">
+														${address.receiver},${address.phone},${address.addr}
+												</div> 
+ 											</c:forEach>
+										</c:if>			
 									</div>
-									<div class="radio">
-										<input type="radio" id="aid" name="aid" class="radio" value="2">李先生，13934720223，北京市朝阳区来广营马泉营
-									</div>
-									<div class="radio">
-										<input type="radio" id="aid" name="aid" class="radio" value="3">李先生，13934720223，北京市朝阳区来广营马泉营
-									</div>
-									<div class="radio">
-										<input type="radio" id="aid" name="aid" class="radio" value="4">李先生，13934720223，北京市朝阳区来广营马泉营
-									</div>
-								</div>
-								<!-- 定义表单错误提示显示元素 -->
+ 								<!-- 定义表单错误提示显示元素 -->
 								<div class="col-md-4" id="aidMsg"></div>
 							</div>
+							
+							<div class="form-group" id="aidDiv">
+ 								<label class="col-md-3 control-label" for="gid">购买商品：</label>
+									<div class="col-md-5">
+										<c:if test="${allGoods!=null }" >
+											<c:forEach items="${allGoods }" var="good">
+												<div class="row">
+													<div class="col-md-4"><img  src="upload/goods/${good.photo }" style="width:100px;height:100px;"></div>
+													<div class="col-md-8">
+														<div class="row">${good.title }</div>
+														<div class="row">购买单价：${good.price}、购买数量：${allShopcars[good.gid]}</div> 
+ 													</div>
+												</div>
+ 												<input type="hidden" id="gid" name="gid" value="${good.gid }">
+											</c:forEach>
+										</c:if>
+									</div>
+ 								<!-- 定义表单错误提示显示元素 -->
+								<div class="col-md-4" id="goodsMsg"></div>
+							</div>
+							
 							<div id="noteDiv" class="form-group">
 								<label class="col-md-3 control-label" for="addr">订单备注：</label>
 								<div class="col-md-5"> 
@@ -57,7 +74,8 @@
 							</div>
 							<div class="form-group">
 								<div class="col-md-5 col-md-offset-3">
-									<button type="submit" class="btn btn-primary btn-lg">下单</button>
+									<button   type="submit" class="btn btn-primary btn-lg">下单</button>
+									 
 									<a href="pages/front/center/shopcar/shopcar_list.jsp" class="btn btn-link">再想想还有什么没卖的？</a>
 								</div>
 							</div>

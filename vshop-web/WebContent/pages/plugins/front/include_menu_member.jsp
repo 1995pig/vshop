@@ -8,6 +8,7 @@
    	public static final String MEMBER_ADDRESS  = "pages/front/center/address/MemberAddressActionFront!list.action";
  	public static final String LOGOUT_URL="MemberLoginActionFront!logout.action";
  	public static final String SHOPCAR_LIST_URL = "pages/front/center/shopcar/ShopcarActionFront!list.action";
+	public static final String ORDERS_LIST_URL = "pages/front/center/orders/OrderActionFront!list.action";
 %>
 <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
 	<div class="navbar-header">
@@ -27,7 +28,7 @@
 						<li><a href="<%=MEMBER_ADDRESS%>">
 							<span class="glyphicon glyphicon-plane"></span>&nbsp;地址管理</a></li>
 						<li class="divider">&nbsp;</li>
-						<li><a href="pages/front/center/orders/orders_list.jsp">
+						<li><a href="<%=ORDERS_LIST_URL%>">
 							<span class="glyphicon glyphicon-list-alt"></span>&nbsp;订单列表</a></li>
 					</ul></li>
 			</c:if>
