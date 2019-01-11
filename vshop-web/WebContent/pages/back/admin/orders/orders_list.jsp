@@ -2,7 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<%!
+	public static final String ORDERS_DETAILS_SHOW_URL = "pages/back/admin/orders/OrderActionBack!show.action";
+%>
 <jsp:include page="/pages/plugins/back/back_header.jsp"/>
 <script type="text/javascript" src="js/back/admin/orders/orders_list.js"></script>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -25,23 +27,29 @@
 								<th class="text-center"><strong>订单编号</strong></th>
 								<th class="text-center"><strong>用户ID</strong></th>
 								<th class="text-center"><strong>总价</strong></th>
-								<th class="text-center"><strong>商品数量</strong></th>
-								<th class="text-center"><strong>下单日期</strong></th>
+ 								<th class="text-center"><strong>下单日期</strong></th>
+ 								<th class="text-center"><strong>地址</strong></th>
+								<th class="text-center"><strong>备注</strong></th>
 								<th class="text-center"><strong>操作</strong></th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<td class="text-center">1</td>
-								<td class="text-center"><a id="userBtn-mldn" onmouseover="this.style.cursor='hand'">mldn</a></td>
-								<td class="text-center">719.8</td>
-								<td class="text-center">5</td>
-								<td class="text-center">2017-10-10</td>
-								<td class="text-center">
-									<a type="button" class="btn btn-info btn-xs" href="pages/back/admin/orders/orders_details_show.jsp">
-										<span class="glyphicon glyphicon-list-alt"></span>&nbsp;查看详情</a>
-								</td>
-							</tr>
+						<tbody> 
+							<c:if test="${allOrders!=null }">
+								<c:forEach items="${allOrders }" var="order"> 
+									<tr>
+										<td class="text-center">${order.oid }</td>
+										<td class="text-center"><a id="userBtn-${order.mid }" onmouseover="this.style.cursor='hand'">${order.mid }</a></td>
+										<td class="text-center">${order.price }</td>
+		 								<td class="text-center">${order.subdate }</td>
+		 								<td class="text-center">${order.address	 }</td>
+		 								<td class="text-center">${order.note}</td>
+										<td class="text-center">
+											<a type="button" class="btn btn-info btn-xs" href="<%=ORDERS_DETAILS_SHOW_URL%>?oid=${order.oid}">
+												<span class="glyphicon glyphicon-list-alt"></span>&nbsp;查看详情</a>
+										</td>
+									</tr>
+								</c:forEach>
+							</c:if>
 						</tbody>
 					</table>
 					<div id="splitBarDiv" style="float:right">

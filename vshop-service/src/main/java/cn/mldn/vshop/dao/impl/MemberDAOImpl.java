@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -83,11 +84,11 @@ public class MemberDAOImpl extends AbstractDAO implements IMemberDAO {
 		if (rs.next()) {
 			Member vo = new Member() ;
 			vo.setName(rs.getString(1));
-			vo.setLastdate(rs.getDate(2));
+			vo.setLastdate(rs.getTimestamp(2));
 			vo.setLocked(rs.getInt(3));
 			vo.setEmail(rs.getString(4));
 			vo.setPhone(rs.getString(5));
-			vo.setRegdate(rs.getDate(6));
+			vo.setRegdate(rs.getTimestamp(6));
 			vo.setMid(id); 	// 将mid设置到VO对象里面
 			return vo ;
 		}
@@ -104,48 +105,48 @@ public class MemberDAOImpl extends AbstractDAO implements IMemberDAO {
 	public List<Member> findAllSplit(Integer currentPage, Integer lineSize)
 			throws SQLException {
 		List<Member> all = new ArrayList<Member>() ;
-		String sql = "SELECT * FROM ( "
-				+ " SELECT mid,name,lastdate,locked,ROWNUM rn "
-				+ " FROM member WHERE ROWNUM<=?) temp"
-				+ " WHERE temp.rn>?" ;
-		super.pstmt = super.conn.prepareStatement(sql) ;
-		super.pstmt.setInt(1, currentPage * lineSize);
-		super.pstmt.setInt(2, (currentPage - 1) * lineSize);
-		ResultSet rs = super.pstmt.executeQuery() ;
-		while (rs.next()) {
-			Member vo = new Member() ;
+		String sql = "SELECT mid,name,email,phone,regdate,lastdate,locked FROM member LIMIT ?,? ";
+		super.pstmt = super.conn.prepareStatement(sql) ; 
+  		super.pstmt.setInt(1, (currentPage - 1) * lineSize); 
+  		super.pstmt.setInt(2, lineSize);
+  		ResultSet rs = super.pstmt.executeQuery() ;
+   		while (rs.next()) {
+ 			Member vo = new Member() ;
 			vo.setMid(rs.getString(1));
 			vo.setName(rs.getString(2));
-			vo.setLastdate(rs.getDate(3));
-			vo.setLocked(rs.getInt(4));
-			all.add(vo) ;
-		}
-		return all;
+			vo.setEmail(rs.getString(3));
+			vo.setPhone(rs.getString(4));
+			vo.setRegdate(new java.sql.Date(rs.getDate(5).getTime()));
+			vo.setLastdate(new java.sql.Date(rs.getDate(6).getTime()));
+			vo.setLocked(rs.getInt(7));
+ 			all.add(vo) ;
+ 		}
+   		return all;
 	}
 
 	@Override
 	public List<Member> findAllSplit(Integer currentPage, Integer lineSize,
 			String column, String keyWord) throws SQLException {
 		List<Member> all = new ArrayList<Member>() ;
-		String sql = "SELECT * FROM ( "
-				+ " SELECT mid,name,lastdate,locked,ROWNUM rn "
-				+ " FROM member WHERE " + column + " LIKE ? AND ROWNUM<=?) temp"
-				+ " WHERE temp.rn>?" ;
-		super.pstmt = super.conn.prepareStatement(sql) ;
-		super.pstmt.setString(1, "%"+keyWord+"%");
-		super.pstmt.setInt(2, currentPage * lineSize);
-		super.pstmt.setInt(3, (currentPage - 1) * lineSize);
-		ResultSet rs = super.pstmt.executeQuery() ;
-		while (rs.next()) {
-			Member vo = new Member() ;
+		String sql = "SELECT mid,name,email,phone,regdate,lastdate,locked FROM member WHERE "+column+" LIKE ? LIMIT ?,? ";
+		super.pstmt = super.conn.prepareStatement(sql) ; 
+ 		super.pstmt.setString(1,"%" + keyWord + "%");
+  		super.pstmt.setInt(2, (currentPage - 1) * lineSize); 
+  		super.pstmt.setInt(3, lineSize);
+  		ResultSet rs = super.pstmt.executeQuery() ;
+   		while (rs.next()) {
+ 			Member vo = new Member() ;
 			vo.setMid(rs.getString(1));
 			vo.setName(rs.getString(2));
-			vo.setLastdate(rs.getDate(3));
-			vo.setLocked(rs.getInt(4));
-			all.add(vo) ;
-		}
-		return all;
-	}
+			vo.setEmail(rs.getString(3));
+			vo.setPhone(rs.getString(4));
+			vo.setRegdate(new java.sql.Date(rs.getDate(5).getTime()));
+			vo.setLastdate(new java.sql.Date(rs.getDate(6).getTime()));
+			vo.setLocked(rs.getInt(7));
+ 			all.add(vo) ;
+ 		}
+   		return all;
+   	}
 
 	@Override
 	public Integer getAllCount() throws SQLException {
@@ -153,7 +154,7 @@ public class MemberDAOImpl extends AbstractDAO implements IMemberDAO {
 		super.pstmt = super.conn.prepareStatement(sql) ;
 		ResultSet rs = super.pstmt.executeQuery() ;
 		if (rs.next()) {
-			return rs.getInt(1) ;
+ 			return rs.getInt(1) ;
 		}
 		return 0;
 	}
@@ -194,5 +195,16 @@ public class MemberDAOImpl extends AbstractDAO implements IMemberDAO {
 		return super.pstmt.executeUpdate() > 0 ;
 	}
 
-
+	@Override
+	public boolean doUpdateLocked(Set<String> mid, Integer locked) throws SQLException {
+		StringBuffer buf = new StringBuffer("UPDATE member SET locked = "+locked+" WHERE mid IN('");
+  		Iterator<String> iter = mid.iterator();
+		while(iter.hasNext()){
+			buf.append(iter.next()).append("'").append(",'");
+		}
+		buf.delete(buf.length()-2, buf.length()).append(")");
+		super.pstmt = super.conn.prepareStatement(buf.toString());
+ 		return super.pstmt.executeUpdate() > 0 ; 
+ 	}
+ 
 }

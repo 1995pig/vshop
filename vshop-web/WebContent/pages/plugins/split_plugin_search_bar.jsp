@@ -7,7 +7,7 @@
 		request.getServerName() + ":" + request.getServerPort() + 
 		request.getContextPath() ;
 %>
- <%	
+<%	
 	request.setCharacterEncoding("UTF-8") ;
 	String url = basePath + request.getAttribute("url") ;	// 提交路径
 	String columnData = (String) request.getAttribute("columnData") ;	// 查询列

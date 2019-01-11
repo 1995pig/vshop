@@ -20,23 +20,23 @@
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-md-3"><strong>订单编号：</strong></div>
-						<div class="col-md-9 col-md-pull-1">1001</div>
+						<div class="col-md-9 col-md-pull-1">${order.oid }</div>
 					</div>
 					<div class="row">
 						<div class="col-md-3"><strong>下单用户：</strong></div>
-						<div class="col-md-9 col-md-pull-1">MLDN</div>
+						<div class="col-md-9 col-md-pull-1">${order.mid }</div>
 					</div>
 					<div class="row">
 						<div class="col-md-3"><strong>下单日期：</strong></div>
-						<div class="col-md-9 col-md-pull-1">2017-10-10</div>
+						<div class="col-md-9 col-md-pull-1">${order.subdate}</div>
 					</div>
 					<div class="row">
 						<div class="col-md-3"><strong>总金额：</strong></div>
-						<div class="col-md-9 col-md-pull-1">520</div>
+						<div class="col-md-9 col-md-pull-1">${order.price }</div>
 					</div>
 					<div class="row">
 						<div class="col-md-3"><strong>购买商品总数：</strong></div>
-						<div class="col-md-9 col-md-pull-1">6</div>
+						<div class="col-md-9 col-md-pull-1">${fn:length(allGoods)}</div>
 					</div>
 					<div class="row">
 						<table class="table table-condensed">
@@ -48,31 +48,19 @@
 								<th class="text-center"><strong>总额</strong></th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<td class="text-center">
-									<a id="showBtn-1" onmouseover="this.style.cursor='hand'">Java开发实战经典</a>
-								</td>
-								<td class="text-center">79.8</td>
-								<td class="text-center">10</td>
-								<td class="text-center">798</td>
-							</tr>
-							<tr>
-								<td class="text-center">
-									<a id="showBtn-1" onmouseover="this.style.cursor='hand'">Java开发实战经典</a>
-								</td>
-								<td class="text-center">79.8</td>
-								<td class="text-center">10</td>
-								<td class="text-center">798</td>
-							</tr>
-							<tr>
-								<td class="text-center">
-									<a id="showBtn-1" onmouseover="this.style.cursor='hand'">Java开发实战经典</a>
-								</td>
-								<td class="text-center">79.8</td>
-								<td class="text-center">10</td>
-								<td class="text-center">798</td>
-							</tr>
+						<tbody> 
+							<c:if test="${allGoods!=null }">
+								<c:forEach items="${allGoods }" var="good">
+									<tr>
+										<td class="text-center">
+											<a id="showBtn-${good.gid }" onmouseover="this.style.cursor='hand'">${good.title }</a>
+										</td>
+										<td class="text-center">${good.price }</td>
+										<td class="text-center">${details[good.gid] }</td>
+											<td class="text-center">${details[good.gid] * good.price}</td>
+									</tr>
+								</c:forEach>
+							</c:if>
 						</tbody>
 					</table>
 					</div>

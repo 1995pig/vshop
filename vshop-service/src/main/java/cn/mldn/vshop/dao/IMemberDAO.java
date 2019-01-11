@@ -2,6 +2,7 @@ package cn.mldn.vshop.dao;
 
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.Set;
 
 import cn.mldn.util.dao.IBaseDAO;
 import cn.mldn.vshop.vo.Member;
@@ -42,4 +43,12 @@ public interface IMemberDAO extends IBaseDAO<String, Member> {
 	 * @throws SQLException
 	 */
 	public boolean doUpdatePassword(String mid,String password) throws SQLException;
+	/**
+	 * 更改用户的状态<br>
+	 * @param mid 用户id<br>
+	 * @param locked   locked==0表示活跃，locked==1表示用户锁定<br>
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean doUpdateLocked(Set<String> mid,Integer locked) throws SQLException;
 }

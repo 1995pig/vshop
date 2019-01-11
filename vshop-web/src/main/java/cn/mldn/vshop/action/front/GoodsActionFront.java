@@ -9,17 +9,18 @@ import cn.mldn.vshop.util.action.AbstractBaseAction;
 public class GoodsActionFront extends AbstractBaseAction {
 	IGoodServiceFront goodService = Factory.getServiceInstance("goods.service.front");
 	public ModelAndView show(Integer gid) throws Exception{
- 		if(super.isRoleAndAction("goods", "goods:list")){
- 			try{
+  		if(super.isRoleAndAction("shopcar", "shopcar:list")){
+  			try{
 				ModelAndView mav = new ModelAndView(super.getUrl("goods_show.page"));
-				mav.add("goods",goodService.get(gid));
+ 				mav.add("goods",goodService.get(gid));
 				return mav;
 			}catch(Exception e){
  				e.printStackTrace();
 			}
 		}else{
- 			ModelAndView mav = new ModelAndView(super.getUrl("forward.front.page"));
+  			ModelAndView mav = new ModelAndView(super.getUrl("forward.front.page"));
 			super.setUrlAndMsg("index.page", "unaction.msg");
+			return mav;
 		}
  		return null;
 	}

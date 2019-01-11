@@ -3,7 +3,7 @@ import cn.mldn.util.web.ParameterValueUtil;
 import cn.mldn.util.web.ServletObjectUtil;
 public class ActionSplitPageUtil {
 	private int currentPage = 1 ;
-	private int lineSize = 4;
+	private int lineSize = 2;
 	private String column ;
 	private String keyWord ;
 	public ActionSplitPageUtil(String columnData,String urlKey) {

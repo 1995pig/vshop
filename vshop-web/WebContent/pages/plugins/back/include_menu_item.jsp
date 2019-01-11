@@ -6,6 +6,8 @@
  	public static final String ITEM_LIST  ="pages/back/admin/item/ItemActionBack!list.action" ;
 	public static final String GOODS_LIST_URL="pages/back/admin/goods/GoodsActionBack!list.action";
  	public static final String GOODS_ADD = "pages/back/admin/goods/GoodsActionBack!getAddPre.action";
+ 	public static final String MEMBER_LIST_URL = "pages/back/admin/member/MemberActionBack!list.action";
+ 	public static final String ORDERS_LIST_URL = "pages/back/admin/orders/OrderActionBack!list.action";
 %>
 <aside class="main-sidebar">
 	<!-- sidebar: style can be found in sidebar.less -->
@@ -31,7 +33,7 @@
 				</a>
 					<ul class="treeview-menu">
 						<c:if test="${fn:contains(allActions,'member:list') }">
-							<li><a href="pages/back/admin/member/member_list.jsp"><i class="fa fa-circle-o"></i>
+							<li><a href="<%=MEMBER_LIST_URL%>"><i class="fa fa-circle-o"></i>
 								用户列表</a></li>
 						</c:if>
 					</ul></li>
@@ -61,7 +63,7 @@
 				</a>
 				<ul class="treeview-menu">
 					<c:if test="${fn:contains(allActions,'orders:list') }">
-						<li><a href="pages/back/admin/orders/orders_list.jsp"><i 
+						<li><a href="<%=ORDERS_LIST_URL%>"><i 
 							class="fa fa-circle-o"></i> 订单列表</a></li>
 					</c:if>
 				</ul></li>

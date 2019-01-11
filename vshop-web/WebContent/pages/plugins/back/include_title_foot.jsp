@@ -4,5 +4,5 @@
 			<b>Version</b> 1.0.0
 		</div>
 		<strong>Copyright &copy; 2006-2017 <a
-			href="http://www.mldn.cn">魔乐科技软件学院</a>.
-		</strong> MLDN </footer>
+			href="http://www.mldn.cn">微商城项目</a>.
+		</strong> 哈哈 </footer>
